@@ -172,31 +172,38 @@ namespace App
         static void GenerateFxManifest(string resourcePath, string author, string description, List<string> snippets, string frontend, string resourceBase)
         {
             var lines = new List<string>
-            {
-                "--- @diagnostic disable: undefined-global",
-                "fx_version 'cerulean'",
-                "game 'gta5'",
-                "lua54 'yes'",
-                $"author '{author}'",
-                $"description '{description}'",
-                ""
-            };
+    {
+        "--- @diagnostic disable: undefined-global",
+        "",
+        "fx_version 'cerulean'",
+        "game 'gta5'",
+        "",
+        "lua54 'yes'",
+        "",
+        $"author '{author}'",
+        $"description '{description}'",
+        ""
+    };
 
             var shared = new List<string>();
             var client = new List<string>();
             var server = new List<string>();
+            var files = new List<string>();
 
             foreach (var snip in snippets)
             {
                 switch (snip)
                 {
-                    case "Logger-system": shared.Add("\n'@mate-logger/init.lua'\n"); break;
-                    case "Grid-system":  client.Add("\n'@mate-grid/init.lua'\n"); break;
-                    case "OxMySQL": server.Add("\n'@oxmysql/lib/MySQL.lua'\n"); break;
+                    case "Logger-system": shared.Add("'@mate-logger/init.lua'"); break;
+                    case "Grid-system": client.Add("'@mate-grid/init.lua'"); break;
+                    case "OxMySQL": server.Add("'@oxmysql/lib/MySQL.lua'"); break;
                     case "NUI":
+                        files.Add("'html/index.html'");
+                        files.Add("'html/assets/*.js'");
+                        files.Add("'html/assets/*.css'");
+                        files.Add("'html/assets/images/{*.png, *.jpg, *.svg, *.webp, *.ico}'");
                         lines.Add("--ui_page 'html/index.html'");
                         lines.Add("ui_page 'http://localhost:5173'");
-                        lines.Add("files {'html/index.html', 'html/assets/*.js', 'html/assets/*.css', 'html/assets/images/{*.png, *.jpg, *.svg, *.webp, *.ico}'}");
                         break;
                 }
             }
@@ -209,7 +216,7 @@ namespace App
                     server.Add("'server/init.lua'");
                     server.Add("'server/main.lua'");
                     shared.Add("'shared/**.*'");
-                break;
+                    break;
                 case "ESX":
                 case "Standalone":
                     client.Add("'client/*.lua'");
@@ -218,11 +225,25 @@ namespace App
                     break;
             }
 
+            // Helper function for sections
+            void AddSection(string name, List<string> items)
+            {
+                if (items.Count == 0) return;
+                lines.Add($"{name} {{");
+                foreach (var item in items)
+                {
+                    lines.Add($"    {item},");
+                }
+                // Remove last comma
+                if (lines.Count > 0) lines[lines.Count - 1] = lines.Last().TrimEnd(',');
+                lines.Add("}");
+                lines.Add(""); // blank line
+            }
 
-            if (shared.Count > 0) lines.Add($"shared_scripts {{\n {string.Join(",\n", shared)}\n }}");
-            if (client.Count > 0) lines.Add($"client_scripts {{\n {string.Join(",\n", client)}\n }}");
-            if (server.Count > 0) lines.Add($"server_scripts {{\n {string.Join(",\n", server)}\n }}");
-
+            AddSection("shared_scripts", shared);
+            AddSection("client_scripts", client);
+            AddSection("server_scripts", server);
+            AddSection("files", files);
 
             File.WriteAllLines(Path.Combine(resourcePath, "fxmanifest.lua"), lines);
         }
