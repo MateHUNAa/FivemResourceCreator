@@ -190,13 +190,13 @@ namespace App
             {
                 switch (snip)
                 {
-                    case "Logger-system": shared.Add("'@mate-logger/init.lua'"); break;
-                    case "Grid-system":  client.Add("'@mate-grid/init.lua'"); break;
-                    case "OxMySQL": server.Add("'@oxmysql/lib/MySQL.lua'"); break;
+                    case "Logger-system": shared.Add("\n'@mate-logger/init.lua'\n"); break;
+                    case "Grid-system":  client.Add("\n'@mate-grid/init.lua'\n"); break;
+                    case "OxMySQL": server.Add("\n'@oxmysql/lib/MySQL.lua'\n"); break;
                     case "NUI":
                         lines.Add("--ui_page 'html/index.html'");
                         lines.Add("ui_page 'http://localhost:5173'");
-                        lines.Add("files {'html/index.html',\n 'html/assets/*.js',\n 'html/assets/*.css',\n 'html/assets/images/{*.png, *.jpg, *.svg, *.webp, *.ico}'}");
+                        lines.Add("files {'html/index.html', 'html/assets/*.js', 'html/assets/*.css', 'html/assets/images/{*.png, *.jpg, *.svg, *.webp, *.ico}'}");
                         break;
                 }
             }
@@ -219,9 +219,9 @@ namespace App
             }
 
 
-            if (shared.Count > 0) lines.Add($"shared_scripts {{ {string.Join(",\n", shared)} }}");
-            if (client.Count > 0) lines.Add($"client_scripts {{ {string.Join(",\n", client)} }}");
-            if (server.Count > 0) lines.Add($"server_scripts {{ {string.Join(",\n", server)} }}");
+            if (shared.Count > 0) lines.Add($"shared_scripts {{\n {string.Join(",\n", shared)}\n }}");
+            if (client.Count > 0) lines.Add($"client_scripts {{\n {string.Join(",\n", client)}\n }}");
+            if (server.Count > 0) lines.Add($"server_scripts {{\n {string.Join(",\n", server)}\n }}");
 
 
             File.WriteAllLines(Path.Combine(resourcePath, "fxmanifest.lua"), lines);

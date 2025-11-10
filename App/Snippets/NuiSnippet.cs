@@ -9,7 +9,7 @@ namespace App.Snippets
 {
     public class NuiSnippet : ILuaSnippet
     {
-        public string Name => "NUI Integration";
+        public string Name => "NUI";
         public string TargetFile => "client/main.lua";
 
         private string CodeTemplate = @"
