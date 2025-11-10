@@ -130,19 +130,23 @@ namespace App
                 ["resourceName"] = resourceName
             };
 
-            foreach (var snippet in allSnippets)
+            // Filter only the snippets that are selected by the user
+            var snippetsToInject = allSnippets
+                .Where(s => selectedSnippets.Contains(s.Name))
+                .ToList();
+
+            foreach (var snippet in snippetsToInject)
             {
                 var filePath = Path.Combine(resourcePath, snippet.TargetFile);
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
                 var code = snippet.GetCode(placeholders);
 
                 if (File.Exists(filePath))
-                    File.AppendAllText(filePath, "\n" +code);
+                    File.AppendAllText(filePath, "\n" + code);
                 else
                     File.WriteAllText(filePath, code);
             }
         }
-
         static string GetProjectRoot()
         {
             var dir = AppContext.BaseDirectory;
