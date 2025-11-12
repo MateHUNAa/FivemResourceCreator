@@ -23,7 +23,7 @@ namespace App
                     .Title("Select [yellow]code snippets[/] to include:")
                     .NotRequired()
                     .InstructionsText("[grey](Press [blue]<space>[/] to toggle, [green]<enter>[/] to confirm)[/]")
-                    .AddChoices("Grid-system", "Logger-system", "OxMySQL", "ESX", "NUI");
+                    .AddChoices("Grid-system", "Logger-system", "OxMySQL", "ESX", "NUI", "ClientLoader");
 
 
             snippetPropmt.Select("Logger-system");
@@ -197,6 +197,7 @@ namespace App
                     case "Logger-system": shared.Add("'@mate-logger/init.lua'"); break;
                     case "Grid-system": client.Add("'@mate-grid/init.lua'"); break;
                     case "OxMySQL": server.Add("'@oxmysql/lib/MySQL.lua'"); break;
+                    case "ClientLoader": shared.Add("'@clientloader/shared.lua'"); break;
                     case "NUI":
                         files.Add("'html/index.html'");
                         files.Add("'html/assets/*.js'");
@@ -208,19 +209,35 @@ namespace App
                 }
             }
 
+
+            bool isCloader = snippets.Contains("ClientLoader");
+          
             switch (resourceBase)
             {
                 case "mCore":
-                    client.Add("'client/init.lua'");
-                    client.Add("'client/main.lua'");
+                    if (isCloader)
+                    {
+                        lines.Add("clientloader {'client/init.lua','client/main.lua'}");
+                    } else
+                    {
+                        client.Add("'client/init.lua'");
+                        client.Add("'client/main.lua'");
+                    }
                     server.Add("'server/init.lua'");
                     server.Add("'server/main.lua'");
                     shared.Add("'shared/**.*'");
                     break;
                 case "ESX":
                 case "Standalone":
-                    client.Add("'client/*.lua'");
-                    server.Add("'server/*.lua'");
+                    if (isCloader)
+                    {
+                        lines.Add("clientloader {'client/init.lua','client/main.lua'}");
+                    }
+                    else
+                    {
+                        client.Add("'client/init.lua'");
+                        client.Add("'client/main.lua'");
+                    }
                     shared.Add("'shared/**.*'");
                     break;
             }
