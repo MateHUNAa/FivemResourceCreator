@@ -197,7 +197,7 @@ namespace App
                     case "Logger-system": shared.Add("'@mate-logger/init.lua'"); break;
                     case "Grid-system": client.Add("'@mate-grid/init.lua'"); break;
                     case "OxMySQL": server.Add("'@oxmysql/lib/MySQL.lua'"); break;
-                    case "ClientLoader": shared.Add("'@clientloader/shared.lua'"); break;
+                    case "ClientLoader": lines.Add("shared_scrips {'@clientloader/shared.lua'}"); break;
                     case "NUI":
                         files.Add("'html/index.html'");
                         files.Add("'html/assets/*.js'");
