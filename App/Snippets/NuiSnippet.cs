@@ -1,16 +1,11 @@
-﻿using App.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using fvm.Interfaces;
 
-namespace App.Snippets
+namespace fvm.Snippets
 {
     public class NuiSnippet : ILuaSnippet
     {
         public string Name => "NUI";
-        public string TargetFile => "client/main.lua";
+        public string TargetFile => "client/nui.lua";
 
         private string CodeTemplate = @"
 function sendNUI(action, data)

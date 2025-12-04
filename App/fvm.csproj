@@ -34,11 +34,18 @@
 			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
 		</Content>
 	</ItemGroup>
+
+
+	<ItemGroup>
+	  <Compile Remove="Snippets\lsImportModules.cs" />
+	</ItemGroup>
 	
 	<ItemGroup>
 	  <Folder Include="CommonEditor\plugins\" />
-	  <Folder Include="CommonEditor\types\" />
+	  <Folder Include="CommonEditor\types\Natives\" />
 	  <Folder Include="FrontendTemplates\React\" />
+	  <Folder Include="Templates\lsModule\client\modules\" />
+	  <Folder Include="Templates\lsModule\server\modules\" />
 	  <Folder Include="Templates\mCore\" />
 	  <Folder Include="Templates\ESX\" />
 	  <Folder Include="Templates\Standalone\" />

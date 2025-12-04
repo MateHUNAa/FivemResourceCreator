@@ -1,7 +1,7 @@
-﻿using App.Interfaces;
+﻿using fvm.Interfaces;
 using Spectre.Console;
 
-namespace App
+namespace fvm
 {
     internal class Program
     {
@@ -13,22 +13,42 @@ namespace App
 
             var resourceBase = AnsiConsole.Prompt(new SelectionPrompt<string>()
                 .Title("Choose a [yellow]base resource[/]:")
-                .AddChoices("mCore", "ESX", "Standalone"));
+                .AddChoices("mCore", "ESX", "Standalone", "lsModule", "lsResource"));
             
             var frontend = AnsiConsole.Prompt(new SelectionPrompt<string>()
                 .Title("Choose a [yellow]Front-end framework[/]:")
                 .AddChoices("None", "React"));
 
+            var snippetOptions = new List<SnippetOption>
+            {
+                    new() { Name = "Grid-system",     Tags = { } },
+                    new() { Name = "Logger-system",   Tags = { } },
+                    new() { Name = "OxMySQL",         Tags = { } },
+                    new() { Name = "ESX",             Tags = { "esx" } },
+                    new() { Name = "NUI",             Tags = { "react" } },
+                    new() { Name = "ClientLoader",    Tags = { } },
+
+                    // LS exclusive
+                    new() { Name = "lsLogger",      Tags = { "ls" } },
+                    //new() { Name = "LS-Module-Helpers", Tags = { "ls" } },
+                    //new() { Name = "LS-Init",         Tags = { "ls" } }
+            };
+
+            var filteredSnippets = snippetOptions
+                .Where(s => s.Matches(resourceBase, frontend))
+                .Select(s => s.Name)
+                .ToList();
+
             var snippetPropmt = new MultiSelectionPrompt<string>()
                     .Title("Select [yellow]code snippets[/] to include:")
                     .NotRequired()
                     .InstructionsText("[grey](Press [blue]<space>[/] to toggle, [green]<enter>[/] to confirm)[/]")
-                    .AddChoices("Grid-system", "Logger-system", "OxMySQL", "ESX", "NUI", "ClientLoader");
+                    .AddChoices(filteredSnippets);
 
-
-            snippetPropmt.Select("Logger-system");
             snippetPropmt.Select("OxMySQL");
 
+            if (!resourceBase.Equals("lsMoudle", StringComparison.OrdinalIgnoreCase) || !resourceBase.Equals("lsResource", StringComparison.OrdinalIgnoreCase))
+                snippetPropmt.Select("Logger-system");
 
             if (resourceBase.Equals("ESX", StringComparison.OrdinalIgnoreCase))
                 snippetPropmt.Select("ESX");
@@ -38,6 +58,7 @@ namespace App
 
 
             var snippets = AnsiConsole.Prompt(snippetPropmt);
+
 
             var includeFunctions = AnsiConsole.Confirm("Include [yellow]common utility functions[/]?", true);
 
@@ -60,6 +81,9 @@ namespace App
             {
                 functionsFileName = "Native";
             }
+
+            if (resourceBase.Equals("lsMoudle", StringComparison.OrdinalIgnoreCase) || resourceBase.Equals("lsResource", StringComparison.OrdinalIgnoreCase))
+                functionsFileName = null;
 
             var author = AnsiConsole.Ask<string>("Author:", "MateHUN");
             var description = AnsiConsole.Ask<string>("Description:", "A new Fivem resource");
@@ -177,6 +201,7 @@ namespace App
         "",
         "fx_version 'cerulean'",
         "game 'gta5'",
+        "use_experimental_fxv2_oal 'yes'",
         "",
         "lua54 'yes'",
         "",
@@ -238,6 +263,22 @@ namespace App
                         client.Add("'client/init.lua'");
                         client.Add("'client/main.lua'");
                     }
+                    shared.Add("'shared/**.*'");
+                    break;
+                case "lsModule":
+                    if (isCloader)
+                    {
+                        lines.Add("clientloader {'client/main.lua'}");
+                    }
+                    else
+                    {
+                        client.Add("'client/init.lua'");
+                        client.Add("'client/main.lua'");
+                    }
+                    server.Add("'server/init.lua'");
+                    server.Add("'server/main.lua'");
+                    shared.Add("'@ox_lib/init.lua'");
+                    shared.Add("'@ls_core/init.lua'");
                     shared.Add("'shared/**.*'");
                     break;
             }

@@ -13,5 +13,6 @@ export default defineConfig({
   build: {
     outDir: "../html",
   },
+  publicDir: false,
   base: "",
 });
