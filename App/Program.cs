@@ -27,11 +27,6 @@ namespace fvm
                     new() { Name = "ESX",             Tags = { "esx" } },
                     new() { Name = "NUI",             Tags = { "react" } },
                     new() { Name = "ClientLoader",    Tags = { } },
-
-                    // LS exclusive
-                    //new() { Name = "lsLogger",      Tags = { "ls" } },
-                    //new() { Name = "LS-Module-Helpers", Tags = { "ls" } },
-                    //new() { Name = "LS-Init",         Tags = { "ls" } }
             };
 
             var filteredSnippets = snippetOptions
