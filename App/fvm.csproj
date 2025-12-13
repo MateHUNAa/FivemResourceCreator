@@ -43,7 +43,7 @@
 	<ItemGroup>
 	  <Folder Include="CommonEditor\plugins\" />
 	  <Folder Include="CommonEditor\types\Natives\" />
-	  <Folder Include="FrontendTemplates\React\" />
+	  <Folder Include="FrontendTemplates\React\web\src\components\" />
 	  <Folder Include="Templates\lsModule\client\modules\" />
 	  <Folder Include="Templates\lsModule\server\modules\" />
 	  <Folder Include="Templates\mCore\" />

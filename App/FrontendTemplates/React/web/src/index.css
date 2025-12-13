@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+     overflow: hidden;
+}
+
+/* reset.css — minimal, modern reset (no opinions, just neutral defaults) */
+
+/* 1) Box sizing */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* 2) Remove default spacing */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* 3) Make media elements easier to work with */
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* 4) Inherit fonts for form controls */
+input, button, textarea, select {
+    font: inherit;
+    color: inherit;
+}
+
+/* 5) Reset buttons */
+button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+/* 6) Reset lists */
+ol, ul {
+    list-style: none;
+}
+
+/* 7) Reset links */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* 8) Table reset */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* 9) Prevent text overflow issues */
+p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+}
+
+/* 10) Root defaults */
+html, body {
+    height: 100%;
+}
+
+body {
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 11) Remove default focus outline only if you replace it elsewhere */
+/* :focus { outline: none; } */

@@ -213,7 +213,7 @@ namespace fvm
             var shared = new List<string>();
             var client = new List<string>();
             var server = new List<string>();
-            var files = new List<string>();
+            var files  = new List<string>();
 
             foreach (var snip in snippets)
             {
@@ -224,11 +224,11 @@ namespace fvm
                     case "OxMySQL": server.Add("'@oxmysql/lib/MySQL.lua'"); break;
                     case "ClientLoader": lines.Add("shared_scrips {'@clientloader/shared.lua'}"); break;
                     case "NUI":
-                        files.Add("'html/index.html'");
-                        files.Add("'html/assets/*.js'");
-                        files.Add("'html/assets/*.css'");
-                        files.Add("'html/assets/images/{*.png, *.jpg, *.svg, *.webp, *.ico}'");
-                        lines.Add("--ui_page 'html/index.html'");
+                        files.Add("'web/dist/index.html'");
+                        files.Add("'web/dist/assets/*.js'");
+                        files.Add("'web/dist/assets/*.css'");
+                        files.Add("'web/dist/assets/images/{*.png, *.jpg, *.svg, *.webp, *.ico}'");
+                        lines.Add("--ui_page 'web/dist/index.html'");
                         lines.Add("ui_page 'http://localhost:5173'");
                         break;
                 }
@@ -280,7 +280,7 @@ namespace fvm
                     shared.Add("'@ox_lib/init.lua'");
                     shared.Add("'@ls_core/init.lua'");
                     shared.Add("'shared/**.*'");
-                    break;
+                break;
             }
 
             // Helper function for sections

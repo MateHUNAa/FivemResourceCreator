@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react'
-
-interface INUIMessage {
-  type: string;
-  state: boolean;
-}
+import { useState } from "react";
+import { isEnvBrowser } from "@/utils/misc";
+import { useExitListener } from "@/hooks/useExitListener";
+import useNuiEvent from "@/hooks/useNuiEvent";
 
 function App() {
   const [visible, setVisibility] = useState<boolean>(isEnvBrowser() ? true : false);

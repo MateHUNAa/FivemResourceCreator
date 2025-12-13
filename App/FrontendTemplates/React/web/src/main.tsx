@@ -4,13 +4,14 @@ import App from './App'
 import './index.css'
 import { store } from '@/store'
 import { Provider } from 'react-redux'
-import { Toaster } from '@/components/ui/toaster'
+import { MantineProvider } from "@mantine/core";
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <Provider store={store}>
+       <MantineProvider defaultColorScheme="dark">
         <App />
-        <Toaster />
+      </MantineProvider>
     </Provider>
   </React.StrictMode>
 )
