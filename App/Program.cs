@@ -29,7 +29,7 @@ namespace fvm
                     new() { Name = "ClientLoader",    Tags = { } },
 
                     // LS exclusive
-                    new() { Name = "lsLogger",      Tags = { "ls" } },
+                    //new() { Name = "lsLogger",      Tags = { "ls" } },
                     //new() { Name = "LS-Module-Helpers", Tags = { "ls" } },
                     //new() { Name = "LS-Init",         Tags = { "ls" } }
             };
