@@ -2,7 +2,7 @@
 
 namespace fvm.Snippets
 {
-    public class NuiSnippet : ILuaSnippet
+    public class LsImportModulesSnippet : ILuaSnippet
     {
         public string Name => "lsLogger";
         public string TargetFile => "server/main.lua";

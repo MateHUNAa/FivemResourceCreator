@@ -13,7 +13,7 @@
             if (Tags.Contains("esx") && resourceBase != "ESX")
                 return false;
 
-            if (Tags.Contains("react")&& frontend !="React")
+            if (Tags.Contains("react") && frontend != "React")
                 return false;
 
             return true;
