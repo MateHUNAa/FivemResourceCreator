@@ -124,15 +124,14 @@ namespace fvm.Commands
         {
             var snippetOptions = new List<SnippetOption>
             {
+                new() { Name = "oxLib",  Tags = { } },
+                new() { Name = "lsCore",  Tags = { } },
                 new() { Name = "Grid-system",   Tags = { } },
                 new() { Name = "Logger-system", Tags = { } },
                 new() { Name = "OxMySQL",       Tags = { } },
                 new() { Name = "ESX",           Tags = { "esx" } },
                 new() { Name = "NUI",           Tags = { "react" } },
                 new() { Name = "ClientLoader",  Tags = { } },
-                new() { Name = "Repository",    Tags = { "ls" } },
-                new() { Name = "DomainEntity",  Tags = { "ls" } },
-                new() { Name = "InstanceWrapper", Tags = { "ls" } },
                 new() { Name = "EventHandler",  Tags = { } },
             };
 
