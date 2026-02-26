@@ -1,8 +1,6 @@
-import { BlobOptions } from "buffer";
-import { KeyboardEvent, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { noop } from "@/utils/misc";
-import { useAppDispatch } from "@/store";
-import { fetchNui } from "@/utils/fetchNui";
+import { useRpc } from "@matehun/rpc";
 
 type FrameVisibleSetter = (bool: boolean) => void;
 
@@ -10,7 +8,8 @@ const LISTENED_KEYS = ["Escape"];
 
 export const useExitListener = (visibleSetter: FrameVisibleSetter) => {
   const setterRef = useRef<FrameVisibleSetter>(noop);
-  const dispatch = useAppDispatch();
+
+  const rpc = useRpc();
 
   useEffect(() => {
     setterRef.current = visibleSetter;
@@ -20,7 +19,7 @@ export const useExitListener = (visibleSetter: FrameVisibleSetter) => {
     const keyHandler = (e: any) => {
       if (LISTENED_KEYS.includes(e.code)) {
         setterRef.current(false);
-        fetchNui("exit");
+        rpc.send("exit", {});
       }
     };
 
