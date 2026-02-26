@@ -50,8 +50,16 @@ namespace fvm.Services
                         lines.Add("--ui_page 'web/dist/index.html'");
                         lines.Add("ui_page 'http://localhost:5173'");
                         break;
+                    case "oxLib":
+                        shared.Add("'@ox_lib/init.lua'");
+                        break;
+                    case "lsCore":
+                        shared.Add("'@ls_core/init.lua'");
+                        break;
                 }
             }
+
+            files.Add("'client/features/**/*.lua'");
 
             bool isCloader = snippets.Contains("ClientLoader");
 
@@ -75,31 +83,17 @@ namespace fvm.Services
                 case "Standalone":
                     if (isCloader)
                     {
-                        lines.Add("clientloader {'client/init.lua','client/main.lua'}");
-                    }
-                    else
-                    {
-                        client.Add("'client/init.lua'");
-                        client.Add("'client/main.lua'");
-                    }
-                    shared.Add("'shared/**.*'");
-                    break;
-                case "lsModule":
-                case "lsResource":
-                    if (isCloader)
-                    {
                         lines.Add("clientloader {'client/main.lua'}");
                     }
                     else
                     {
-                        client.Add("'client/init.lua'");
+                        client.Add("'utils/cl_*.lua'");
                         client.Add("'client/main.lua'");
                     }
-                    server.Add("'server/init.lua'");
-                    server.Add("'server/main.lua'");
-                    shared.Add("'@ox_lib/init.lua'");
-                    shared.Add("'@ls_core/init.lua'");
-                    shared.Add("'shared/**.*'");
+                    shared.Add("'shared/constants/*.lua'");
+                    shared.Add("'shared/types/*.lua'");
+                    shared.Add("'shared/clases/*.lua'");
+                    shared.Add("'utils/sh_*.lua'");
                     break;
             }
 
